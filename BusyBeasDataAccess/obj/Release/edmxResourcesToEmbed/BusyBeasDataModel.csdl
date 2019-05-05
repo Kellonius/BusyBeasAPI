@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusyBeasDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="address">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="streetTwo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="state" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="zip" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="isDelete" Type="Boolean" />
+    <Property Name="CREATE_TS" Type="DateTime" Precision="3" />
+    <Property Name="UPDATE_TS" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="user" Relationship="Self.FK__address__userId__5812160E" FromRole="address" ToRole="users" />
+  </EntityType>
+  <EntityType Name="serviceRequest">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="serviceId" Type="Int32" Nullable="false" />
+    <Property Name="scheduledDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fulfilled" Type="Boolean" />
+    <Property Name="hoursTaken" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="service" Relationship="Self.FK__serviceRe__servi__59FA5E80" FromRole="serviceRequests" ToRole="services" />
+    <NavigationProperty Name="user" Relationship="Self.FK__serviceRe__userI__59063A47" FromRole="serviceRequests" ToRole="users" />
+  </EntityType>
+  <EntityType Name="service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="serviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="serviceDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pricePerHour" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="CREATE_TS" Type="DateTime" Precision="3" />
+    <Property Name="UPDATE_TS" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="serviceRequests" Relationship="Self.FK__serviceRe__servi__59FA5E80" FromRole="services" ToRole="serviceRequests" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="firstname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="isAdmin" Type="Boolean" />
+    <Property Name="CREATE_TS" Type="DateTime" Precision="3" />
+    <Property Name="UPDATE_TS" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="addresses" Relationship="Self.FK__address__userId__5812160E" FromRole="users" ToRole="address" />
+    <NavigationProperty Name="serviceRequests" Relationship="Self.FK__serviceRe__userI__59063A47" FromRole="users" ToRole="serviceRequests" />
+  </EntityType>
+  <Association Name="FK__address__userId__5812160E">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="address" Type="Self.address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="address">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__serviceRe__servi__59FA5E80">
+    <End Role="services" Type="Self.service" Multiplicity="1" />
+    <End Role="serviceRequests" Type="Self.serviceRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="services">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="serviceRequests">
+        <PropertyRef Name="serviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__serviceRe__userI__59063A47">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="serviceRequests" Type="Self.serviceRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="serviceRequests">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BusyBeasEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="addresses" EntityType="Self.address" />
+    <EntitySet Name="serviceRequests" EntityType="Self.serviceRequest" />
+    <EntitySet Name="services" EntityType="Self.service" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK__address__userId__5812160E" Association="Self.FK__address__userId__5812160E">
+      <End Role="users" EntitySet="users" />
+      <End Role="address" EntitySet="addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__serviceRe__servi__59FA5E80" Association="Self.FK__serviceRe__servi__59FA5E80">
+      <End Role="services" EntitySet="services" />
+      <End Role="serviceRequests" EntitySet="serviceRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__serviceRe__userI__59063A47" Association="Self.FK__serviceRe__userI__59063A47">
+      <End Role="users" EntitySet="users" />
+      <End Role="serviceRequests" EntitySet="serviceRequests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

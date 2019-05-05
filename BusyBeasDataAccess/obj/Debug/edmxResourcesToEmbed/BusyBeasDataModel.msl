@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BusyBeasDBModelStoreContainer" CdmEntityContainer="BusyBeasEntities">
+    <EntitySetMapping Name="addresses">
+      <EntityTypeMapping TypeName="BusyBeasDBModel.address">
+        <MappingFragment StoreEntitySet="address">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="street" ColumnName="street" />
+          <ScalarProperty Name="streetTwo" ColumnName="streetTwo" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="zip" ColumnName="zip" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+          <ScalarProperty Name="CREATE_TS" ColumnName="CREATE_TS" />
+          <ScalarProperty Name="UPDATE_TS" ColumnName="UPDATE_TS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="serviceRequests">
+      <EntityTypeMapping TypeName="BusyBeasDBModel.serviceRequest">
+        <MappingFragment StoreEntitySet="serviceRequests">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="serviceId" ColumnName="serviceId" />
+          <ScalarProperty Name="scheduledDate" ColumnName="scheduledDate" />
+          <ScalarProperty Name="fulfilled" ColumnName="fulfilled" />
+          <ScalarProperty Name="hoursTaken" ColumnName="hoursTaken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="services">
+      <EntityTypeMapping TypeName="BusyBeasDBModel.service">
+        <MappingFragment StoreEntitySet="services">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="serviceName" ColumnName="serviceName" />
+          <ScalarProperty Name="serviceDescription" ColumnName="serviceDescription" />
+          <ScalarProperty Name="pricePerHour" ColumnName="pricePerHour" />
+          <ScalarProperty Name="CREATE_TS" ColumnName="CREATE_TS" />
+          <ScalarProperty Name="UPDATE_TS" ColumnName="UPDATE_TS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="BusyBeasDBModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+          <ScalarProperty Name="CREATE_TS" ColumnName="CREATE_TS" />
+          <ScalarProperty Name="UPDATE_TS" ColumnName="UPDATE_TS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

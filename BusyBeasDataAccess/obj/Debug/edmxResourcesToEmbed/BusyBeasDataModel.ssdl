@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusyBeasDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="address">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="street" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="streetTwo" Type="varchar" MaxLength="50" />
+    <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="state" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="zip" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="isDelete" Type="bit" />
+    <Property Name="CREATE_TS" Type="datetime" />
+    <Property Name="UPDATE_TS" Type="datetime" />
+  </EntityType>
+  <EntityType Name="serviceRequests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="serviceId" Type="int" Nullable="false" />
+    <Property Name="scheduledDate" Type="datetime" Nullable="false" />
+    <Property Name="fulfilled" Type="bit" />
+    <Property Name="hoursTaken" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="services">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="serviceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="serviceDescription" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="pricePerHour" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="CREATE_TS" Type="datetime" />
+    <Property Name="UPDATE_TS" Type="datetime" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="pass" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="firstname" Type="varchar" MaxLength="30" />
+    <Property Name="lastname" Type="varchar" MaxLength="30" />
+    <Property Name="isAdmin" Type="bit" />
+    <Property Name="CREATE_TS" Type="datetime" />
+    <Property Name="UPDATE_TS" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__address__userId__5812160E">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="address" Type="Self.address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="address">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__serviceRe__servi__59FA5E80">
+    <End Role="services" Type="Self.services" Multiplicity="1" />
+    <End Role="serviceRequests" Type="Self.serviceRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="services">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="serviceRequests">
+        <PropertyRef Name="serviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__serviceRe__userI__59063A47">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="serviceRequests" Type="Self.serviceRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="serviceRequests">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BusyBeasDBModelStoreContainer">
+    <EntitySet Name="address" EntityType="Self.address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="serviceRequests" EntityType="Self.serviceRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="services" EntityType="Self.services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__address__userId__5812160E" Association="Self.FK__address__userId__5812160E">
+      <End Role="users" EntitySet="users" />
+      <End Role="address" EntitySet="address" />
+    </AssociationSet>
+    <AssociationSet Name="FK__serviceRe__servi__59FA5E80" Association="Self.FK__serviceRe__servi__59FA5E80">
+      <End Role="services" EntitySet="services" />
+      <End Role="serviceRequests" EntitySet="serviceRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__serviceRe__userI__59063A47" Association="Self.FK__serviceRe__userI__59063A47">
+      <End Role="users" EntitySet="users" />
+      <End Role="serviceRequests" EntitySet="serviceRequests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
